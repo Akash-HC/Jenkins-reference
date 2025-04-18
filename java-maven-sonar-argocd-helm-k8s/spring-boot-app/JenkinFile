@@ -30,7 +30,7 @@ pipeline {
 
         stage('Build and Push Docker Image') {
             environment {
-                REGISTRY_CREDENTIALS = credentials('docker-hub-creds')
+                REGISTRY_CREDENTIALS = credentials('docker-hub-creds-new')
             }
             steps {
                 echo '✅ Building Docker image and pushing to Docker Hub'
@@ -40,7 +40,7 @@ pipeline {
                         docker build -t ${DOCKER_IMAGE} .
                     '''
                     def dockerImage = docker.image("${DOCKER_IMAGE}")
-                    docker.withRegistry('https://index.docker.io/v1/', "docker-hub-creds") {
+                    docker.withRegistry('https://index.docker.io/v1/', "docker-hub-creds-new") {
                         dockerImage.push()
                     }
                 }
